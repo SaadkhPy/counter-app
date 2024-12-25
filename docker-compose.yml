@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  web:
+    container_name: web-app
+    build: .
+    command: python src/app.py
+    ports:
+      - 5000:5000
+    depends_on:
+      - redis
+    networks:
+      internal-net:
+      external-net:
+    volumes:
+      - ./src:/usr/src/app/src:ro
+  redis:
+    container_name: redisDB
+    image: redis:alpine
+    networks:
+      internal-net:
+
+networks:
+  external-net:
+  internal-net:
+   internal: true
